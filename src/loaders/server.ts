@@ -1,6 +1,6 @@
 import { Application } from "express";
 import { createExpressServer } from "routing-controllers";
-import { CarController } from "../controllers/CarController";
+import { CarController } from "../controllers/car.controller";
 
 export const ExpressServerLoader = (): Application =>
 { 
