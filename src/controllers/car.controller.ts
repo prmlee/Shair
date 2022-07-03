@@ -12,9 +12,9 @@ import {
 } from "routing-controllers";
 import { CarService } from "../services/car.service";
 import { Car } from "../database/entities/car.entity";
-import { CarFilterParam } from "../dtos/filterparam.dto";
-import { CarInsertParam } from "../dtos/insertparam.dto";
-import { CarUpdateParam } from "../dtos/updateparam.dto";
+import { CarFilterParam } from "../dtos/car/filter.dto";
+import { CarInsertParam } from "../dtos/car/insert.dto";
+import { CarUpdateParam } from "../dtos/car/update.dto";
 
 @JsonController("/cars")
 export class CarController {

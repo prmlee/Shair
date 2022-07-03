@@ -1,5 +1,5 @@
 import { IsAlpha, IsDate, IsNumber, IsOptional, IsPositive } from "class-validator";
-import { PageQuery } from "./pagequery.dto";
+import { PageQuery } from "../pagequery.dto";
 
 export class CarFilterParam extends PageQuery {
   @IsAlpha()

@@ -1,7 +1,7 @@
-import { IsPositive } from "class-validator";
+import { IsNumber, IsPositive } from "class-validator";
 
-export class PageQuery { 
-  @IsPositive()
+export class PageQuery {
+  @IsNumber()
   page: number;
 
   @IsPositive()
