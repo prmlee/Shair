@@ -18,6 +18,20 @@ create the file '.env' in the root of the project and copy the content of '.env.
 
 execute the following command - **yarn dev** or **npm run dev**. You can see the running backend server.
 
+## 5. Techniques
+
+#### Node.js
+
+#### TypeScript
+
+#### TypeORM
+
+#### ExpressJS
+
+#### routing-controller
+
+#### VIN decoder API
+
 # How to Test the Project
 
 I implemented 5 features in the project for retrieving the data in DB.
