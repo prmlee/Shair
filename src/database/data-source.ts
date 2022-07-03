@@ -1,6 +1,7 @@
+import "dotenv/config";
 import { DataSource } from "typeorm";
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -11,7 +12,21 @@ export const AppDataSource = new DataSource({
   database: process.env.MYSQL_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [env === 'production' ? 'build/database/entities/*{.ts,.js}' : 'src/database/entities/*{.ts,.js}'],
-  migrations: [env === 'production' ? 'build/database/migrations/*{.ts,.js}' : 'src/database/migrations/*{.ts,.js}'],
-  subscribers: [env === 'production' ? 'build/database/subscribers/*{.ts,.js}' : 'src/database/subscribers/*{.ts,.js}'],
+  migrationsTableName: "migrations",
+  entities: [
+    env === "production"
+      ? "build/database/entities/*{.ts,.js}"
+      : "src/database/entities/*{.ts,.js}",
+  ],
+  migrations: [
+    env === "production"
+      ? "build/database/migrations/*{.ts,.js}"
+      : "src/database/migrations/*{.ts,.js}",
+  ],
+  subscribers: [
+    env === "production"
+      ? "build/database/subscribers/*{.ts,.js}"
+      : "src/database/subscribers/*{.ts,.js}",
+  ],
+  migrationsRun: true,
 });
