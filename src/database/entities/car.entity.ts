@@ -3,35 +3,44 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity("cars")
 export class Car {
   @PrimaryGeneratedColumn("uuid")
-  public id: string;
+  id: string;
 
   @Column({ name: "vin", unique: true, length: 17 })
-  public vin: string;
+  vin: string;
 
   @Column({ name: "license_plate", unique: true, length: 15 })
-  public licensePlate: string;
+  licensePlate: string;
 
-  @Column({ name: "regi" })
-  public regi: string;
+  @Column({ name: "regi", length: 30 })
+  regi: string;
 
   @Column({ name: "regi_state", length: 5 })
-  public regiState: string;
+  regiState: string;
 
   @Column("timestamp", { name: "regi_expiration" })
-  public regiExp: Date;
+  regiExp: Date;
 
   @Column({ name: "regi_name", length: 30 })
-  public regiName: string;
+  regiName: string;
 
-  @Column({ name: "car_value", type: "integer" })
-  public carValue: number;
+  @Column({ name: "car_value", type: "integer", comment: "unit: cent" })
+  carValue: number;
 
-  @Column({ name: "current_mileage", type: "integer" })
-  public currentMileage: number;
+  @Column({ name: "current_mileage", type: "integer", default: 0, comment: "unit: meter" })
+  currentMileage: number;
 
-  @Column({ name: "description", type: "text" })
-  public description: string;
+  @Column({ name: "description", type: "text", default: "" })
+  description: string;
 
   @Column({ name: "color", length: 7, default: "#000000" })
-  public color: string;
+  color: string;
+
+  @Column({ name: "year", type: "int" })
+  year: number;
+
+  @Column({ name: "make", length: 20 })
+  make: string;
+
+  @Column({ name: "model", length: 20 })
+  model: string;
 }
