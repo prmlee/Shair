@@ -28,6 +28,12 @@ const find = async (filterParam: CarFilterParam): Promise<[Car[], number]> => {
   if (filterParam.endDate) {
     query.andWhere({ regiExp: LessThanOrEqual(filterParam.endDate) });
   }
+  if (filterParam.startValue) {
+    query.andWhere({ carValue: MoreThanOrEqual(filterParam.startValue) });
+  }
+  if (filterParam.endValue) {
+    query.andWhere({ carValue: LessThanOrEqual(filterParam.endValue) });
+  }
   if (filterParam.startMileage) {
     query.andWhere({ currentMileage: MoreThanOrEqual(filterParam.startMileage) });
   }
