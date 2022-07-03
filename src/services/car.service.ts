@@ -1,7 +1,8 @@
-import { CarFilterParam } from "../dtos/filterparam.dto";
+import { CarFilterParam } from "../dtos/car/filter.dto";
 import { AppDataSource } from "../database/data-source";
 import { Car } from "../database/entities/car.entity";
 import { ILike, LessThanOrEqual, MoreThanOrEqual, SelectQueryBuilder } from "typeorm";
+import { VinUtil } from "../utils/vindecod.util";
 
 const find = async (filterParam: CarFilterParam): Promise<[Car[], number]> => {
   const query: SelectQueryBuilder<Car> = AppDataSource.getRepository(Car).createQueryBuilder("car");
@@ -52,6 +53,15 @@ const findById = async (id: string): Promise<Car> => {
 };
 
 const save = async (car: Car): Promise<Car> => {
+  if (!car.id) {
+    //insert a new car value
+    await VinUtil.decodeVin(car.vin);
+    const infos = VinUtil.getSpecificInfo(["Model Year", "Make", "Model"]);
+    car.year = parseInt(infos["Model Year"]);
+    car.make = infos["Make"];
+    car.model = infos["Model"];
+  }
+
   const savedCar: Car = await AppDataSource.manager.save(car);
   return savedCar;
 };
