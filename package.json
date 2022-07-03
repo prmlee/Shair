@@ -3,21 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "license": "ISC",
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node build/src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon",
-    "build": "rm -rf build && tsc -p tsconfig.json"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://prmlee: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@github.com/prmlee/Shair.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/prmlee/Shair/issues"
+    "build": "tsc -p tsconfig.json",
+    "migration:up": "ts-node ./node_modules/typeorm/cli.js migration:run -d src/database/data-source.ts",
+    "migration:down": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/database/data-source.ts"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
