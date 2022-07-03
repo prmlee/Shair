@@ -1,12 +1,12 @@
-import { IsAlpha, IsDate, IsNumber, IsOptional, IsPositive } from "class-validator";
+import { IsAlpha, IsAlphanumeric, IsDate, IsNumber, IsOptional, IsPositive } from "class-validator";
 import { PageQuery } from "../pagequery.dto";
 
 export class CarFilterParam extends PageQuery {
-  @IsAlpha()
+  @IsAlphanumeric()
   @IsOptional()
   vin: string;
 
-  @IsAlpha()
+  @IsAlphanumeric()
   @IsOptional()
   licensePlate: string;
 
