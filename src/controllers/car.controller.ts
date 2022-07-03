@@ -6,21 +6,20 @@ import {
   JsonController,
   Param,
   Post,
+  Put,
   QueryParams,
   Res,
 } from "routing-controllers";
 import { CarService } from "../services/car.service";
 import { Car } from "../database/entities/car.entity";
-import { PageQuery } from "../dtos/pagequery.dto";
 import { CarFilterParam } from "../dtos/filterparam.dto";
+import { CarInsertParam } from "../dtos/insertparam.dto";
+import { CarUpdateParam } from "../dtos/updateparam.dto";
 
 @JsonController("/cars")
 export class CarController {
   @Get("/")
-  async getAll(@QueryParams() query: PageQuery) {
-    const filterParam: CarFilterParam = new CarFilterParam();
-    filterParam.page = query.page - 1;
-    filterParam.size = query.size;
+  async search(@QueryParams() filterParam: CarFilterParam) {
     try {
       const data = await CarService.find(filterParam);
       return { data };
@@ -44,11 +43,48 @@ export class CarController {
     }
   }
 
-  @Post("/")
-  async saveCar(@Body() car: Car) {
+  @Put("/")
+  async insertCar(@Body() carReq: CarInsertParam) {
     try {
-      const savedCar: Car = await CarService.save(car);
-      return { data: savedCar };
+      const car: Car = new Car();
+      car.vin = carReq.vin;
+      car.licensePlate = carReq.licensePlate;
+      car.regi = carReq.regi;
+      car.regiState = carReq.regiState;
+      car.regiExp = carReq.regiExp;
+      car.regiName = carReq.regiName;
+      car.carValue = carReq.carValue;
+      car.currentMileage = carReq.currentMileage || 0;
+      car.description = carReq.description || "";
+      car.color = carReq.color || "#000000";
+
+      const insertedCar: Car = await CarService.save(car);
+      return { data: insertedCar };
+    } catch (error) {
+      console.log(error);
+      return { error: "Internal Server Error" };
+    }
+  }
+
+  @Post("/")
+  async updateCar(@Body() carReq: CarUpdateParam) {
+    try {
+      const car: Car = await CarService.findById(carReq.id);
+      if (!car) {
+        return { error: "Car Doesn't Exist" };
+      }
+      car.licensePlate = carReq.licensePlate;
+      car.regi = carReq.regi;
+      car.regiState = carReq.regiState;
+      car.regiExp = carReq.regiExp;
+      car.regiName = carReq.regiName;
+      car.carValue = carReq.carValue;
+      car.currentMileage = carReq.currentMileage;
+      car.description = carReq.description;
+      car.color = carReq.color;
+
+      const updatedCar: Car = await CarService.save(car);
+      return { data: updatedCar };
     } catch (error) {
       console.log(error);
       return { error: "Internal Server Error" };
@@ -63,7 +99,7 @@ export class CarController {
         return { error: "Car Doesn't Exist" };
       }
       await CarService.remove(car);
-      return { data: `Removed Car - ${id}` };
+      return { data: "Removed Car" };
     } catch (error) {
       console.log(error);
       return { error: "Internal Server Error" };
